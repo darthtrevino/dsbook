@@ -14,3 +14,6 @@ test: link_tests
 
 target:
 	mkdir -p target
+
+clean:
+	rm target/*

@@ -14,18 +14,18 @@ double sqrtOperand(double a, double b, double c) {
 int computeBinomial(double a, double b, double c, BinomialRoots *pResult) {
   // Prevent divide-by-zero, which occurs when the input is not a quadratic.
   if (fabs(a) < SIGMA) {
-    return 1;
+    return RESULT_NOT_QUADRATIC;
   }
   // Check if the roots are imaginary
   double rootTarget = sqrtOperand(a, b, c);
   if (rootTarget < 0) {
-    return 2;
+    return RESULT_IMAGINARY;
   }
-  
+
   double denominator = a * 2.0;
   double negB = b * -1.0;
   double additiveTerm = sqrt(rootTarget);
   pResult->root1 = (negB + additiveTerm) / denominator;
   pResult->root2 = (negB - additiveTerm) / denominator;
-  return 0;
+  return RESULT_OK;
 }

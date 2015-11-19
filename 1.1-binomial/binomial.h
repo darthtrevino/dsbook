@@ -16,3 +16,15 @@ typedef struct {
  *  2 - result is imaginary
  */
 int computeBinomial(double a, double b, double c, BinomialRoots *pResult);
+
+/** Result Code Enumeration */
+enum {
+  RESULT_OK = 0,
+  RESULT_NOT_QUADRATIC = 1,
+  RESULT_IMAGINARY = 2
+};
+
+/**
+ * A stand-in for maximum diff between two doubles
+ */
+extern double const SIGMA;

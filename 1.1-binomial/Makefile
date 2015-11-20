@@ -1,19 +1,25 @@
+CC = gcc
+CFLAGS = -std=c11
+LFLAGS = -Wall
+
 default: test
 
-binomial.o: target
-	gcc -std=c11 -c binomial.c -o target/binomial.o
+target/binomial.o: binomial.c target
+	$(CC) $(CFLAGS) -c $< -o $@
 
-binomial_test.o: target
-	gcc -std=c11 -c binomial_test.c -o target/binomial_test.o
+target/binomial_test.o: binomial_test.c target
+	$(CC) $(CFLAGS) -c $< -o $@
 
-link_tests: binomial_test.o binomial.o
-	gcc target/binomial.o target/binomial_test.o -Wall -o target/run_tests
+target/test: target/binomial_test.o target/binomial.o
+	$(CC) $^ $(LFLAGS) -o $@
 
-test: link_tests
-	./target/run_tests
+test: target/test
+	./target/$@
 
 target:
-	mkdir -p target
+	mkdir -p $@
 
 clean:
 	rm target/*
+
+.PHONY: clean

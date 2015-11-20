@@ -1,5 +1,6 @@
 #import <stdlib.h>
 #import <string.h>
+#import <stdio.h>
 #import "grading.h"
 
 // ID Generators
@@ -45,16 +46,27 @@ void initialize_grading() {
   allocate_enrollments();
 }
 
-static void free_array(int maxId, void **array) {
-  for (int i = 0; i < maxId; i++)
+static void free_array(int size, void **array) {
+  for (int i = 0; i < size; i++)
     if (array[i] != NULL)
       free(array[i]);
   free(array);
 }
 
+static void free_enrollment(Enrollment *enrollment) {
+  if (enrollment->numAssignments)
+    free_array(enrollment->numAssignments, (void**)enrollment->assignments);
+  if (enrollment->numTests)
+    free_array(enrollment->numTests, (void**)enrollment->tests);
+}
+
 void free_grading() {
   free_array(CLASS_ID, (void**)classArray);
   free_array(STUDENT_ID, (void**)studentArray);
+
+  for (int i = 0; i < ENROLLMENT_ID; i++) {
+    free_enrollment(enrollmentArray[i]);
+  }
   free_array(ENROLLMENT_ID, (void**)enrollmentArray);
 }
 
@@ -210,6 +222,8 @@ Assignment *add_assignment_result(int enrollmentId, double percentCorrect, Grade
     for (int i = 0; i < enrollment->numAssignments; i++) {
       assignments[i] = enrollment->assignments[i];
     }
+    free(enrollment->assignments);
+    enrollment->assignments = NULL;
   }
 
   Assignment *newAssignment = create_assignment(percentCorrect, grade);
@@ -226,6 +240,8 @@ Assignment *add_test_result(int enrollmentId, double percentCorrect, Grade grade
     for (int i = 0; i < enrollment->numTests; i++) {
       tests[i] = enrollment->tests[i];
     }
+    free(enrollment->tests);
+    enrollment->tests = NULL;
   }
 
   Assignment *newTest = create_assignment(percentCorrect, grade);

@@ -2,7 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 #include "grading.h"
+#include "testsupport.h"
 
 void test_can_add_class();
 void test_can_get_class_by_id();
@@ -17,24 +19,29 @@ void test_add_assignment_result();
 void test_add_test_result();
 
 int main() {
+  tests_begin("grading");
+
   // Class Tests
-  test_can_add_class();
-  test_can_get_class_by_id();
-  test_can_list_classes();
+  run_test(test_can_add_class);
+  run_test(test_can_get_class_by_id);
+  run_test(test_can_list_classes);
 
   // Student Tests
-  test_can_add_student();
-  test_can_get_student_by_id();
-  test_can_list_students();
+  run_test(test_can_add_student);
+  run_test(test_can_get_student_by_id);
+  run_test(test_can_list_students);
 
   // Enrollment Management
-  test_can_add_enrollment();
-  test_get_enrollments_for_class();
-  test_get_enrollments_for_student();
+  run_test(test_can_add_enrollment);
+  run_test(test_get_enrollments_for_class);
+  run_test(test_get_enrollments_for_student);
 
   // Test/Assignment Management
-  test_add_assignment_result();
-  test_add_test_result();
+  run_test(test_add_assignment_result);
+  run_test(test_add_test_result);
+
+  tests_complete();
+  return 0;
 }
 
 void test_can_add_class() {

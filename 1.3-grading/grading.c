@@ -1,7 +1,7 @@
-#import <stdlib.h>
-#import <string.h>
-#import <stdio.h>
-#import "grading.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "grading.h"
 
 // ID Generators
 int CLASS_ID;

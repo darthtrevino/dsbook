@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -std=c11
-LFLAGS = -Wall
+LFLAGS = -Wall -lm
 
 default: test
 
